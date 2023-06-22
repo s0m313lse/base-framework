@@ -1,1 +1,35 @@
 // app global css in SCSS form
+.app-btn{
+  margin: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.app-page{
+  background-color: $accent;
+  padding: 2rem;
+  height:100%;
+}
+
+.app-page-container{
+  background-color: $warning;
+  padding: 2rem;
+  height:100%;
+}
+
+.component{
+  background-color: $secondary;
+  padding: 2rem;
+}
+
+.form-component{
+  padding: 1rem;
+}
+
+.sub-component{
+  background-color: white;
+  padding: 2rem;
+  margin: .5rem;
+  width: 100%;
+}

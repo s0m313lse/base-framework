@@ -6,6 +6,13 @@ export interface EssentialLinkProps {
   icon?: string;
 }
 
+export interface Dingus {
+  _id:string;
+  name: string;
+  description: string;
+  verified: string;
+}
+
 export interface Todo {
   id: number;
   content: string;

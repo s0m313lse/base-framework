@@ -1,5 +1,7 @@
 <template>
-  <q-page class="row items-center justify-evenly">
+  <q-page class="col items-center justify-evenly">
+    This is a dingus app
+    that will get a description eventually
     <example-component
       title="Example component"
       active
@@ -10,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { Todo, Meta } from 'components/models';
+import { Todo, Meta } from '../interfaces';
 import ExampleComponent from 'components/ExampleComponent.vue';
 import { ref } from 'vue';
 
