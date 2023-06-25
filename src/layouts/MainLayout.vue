@@ -12,8 +12,8 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-center">
-          Base Quasar App w/ Axios, Mongo, Pinia & Vite
+        <q-toolbar-title>
+          Base Typescript Quasar App w/ Pinia
         </q-toolbar-title>
 
         <div class="gt-sm">Quasar v{{ $q.version }}</div>

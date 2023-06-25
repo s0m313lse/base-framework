@@ -78,11 +78,12 @@ export const useDingusStore = defineStore({
         }
 
         this.dinguss = [...this.dinguss, d]
-        return {
+        const confirm:Confirm = {
           code:'success',
           id: d._id,
           name: d.name
         }
+        return confirm;
       }
     },
 
@@ -122,6 +123,12 @@ export const useDingusStore = defineStore({
     deleteAllDinguss() {
       this.dinguss = [];
       this.selectedDingus = null;
+      const confirm:Confirm = {
+        code: 'success',
+        id: '',
+        name: ''
+      }
+      return confirm;
     },
 
     setVerified(name:string){

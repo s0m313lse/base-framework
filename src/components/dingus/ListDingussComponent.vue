@@ -68,7 +68,7 @@
   <app-dialog
     v-model="showDeleteAllDinguss" persistent
     :label="'Delete all the Dinguss'"
-    @submit="removeAllDinguss"
+    @submit="onremoveAllDinguss"
   >
     Are you sure you want to Delete all the Dinguss ?
     <template #buttons>
@@ -94,7 +94,7 @@ const $q = useQuasar();
 
 import { storeToRefs } from 'pinia'
 
-import { Dingus } from '../../interfaces';
+import { Dingus, Confirm } from '../../interfaces';
 
 import { useDingusStore} from '../../stores/dingus-store'
 const dingusStore = useDingusStore();
@@ -114,10 +114,20 @@ function setActiveDingus(dingus:Dingus, index:number) {
   dingusStore.selectDingus(dingus.name);
 }
 
-function removeAllDinguss() {
-  console.log('into removeAllDinguss');
-  showDeleteAllDinguss.value = false;
-  dingusStore.deleteAllDinguss();
+async function onremoveAllDinguss() {
+  const dataLoaded:Confirm = await dingusStore.deleteAllDinguss();
+  setDeleteAllDinguss(dataLoaded);
+}
+
+function setDeleteAllDinguss(confirm:Confirm){
+  if(confirm.code == 'success'){
+    showDeleteAllDinguss.value = false;
+    $q.notify({
+      message: 'You have deleted all the Dinguss',
+      color: 'negative',
+      position: 'top'
+    })
+  }
 }
 
 const showDeleteAllDinguss = ref(false)

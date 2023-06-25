@@ -1,7 +1,7 @@
 <template>
   <q-card v-if="selectedDingus._id.length>0" class="card">
     <q-toolbar class="card-header">
-      <q-toolbar-title>Dingus is dirty: {{ isDirty }}</q-toolbar-title>
+      <q-toolbar-title>Dingus Detail</q-toolbar-title>
     </q-toolbar>
     <q-form ref="formComponent">
       <q-item>
@@ -155,12 +155,12 @@ async function updateDingus(d:Dingus){
   setUpdated(dataLoaded);
 }
 
-function setUpdated(code:Confirm){
-  if(code.code == 'success'){
+function setUpdated(conifirm:Confirm){
+  if(conifirm.code == 'success'){
     $q.notify({
-          message: code.name + ' updated successfully',
-          color: 'positive',
-          position: 'top'
+      message: confirm.name + ' updated successfully',
+      color: 'positive',
+      position: 'top'
     })
   }
 }
