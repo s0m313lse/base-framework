@@ -1,8 +1,13 @@
 import { boot } from 'quasar/wrappers'
 
+import appBtn from '../components/~Global/AppBtn.vue'
+import appDialog from '../components/~Global/AppDialog.vue'
+import nothingHere from '../components/~Global/NothingHere.vue'
+
 const globalComponents = {
-    'app-btn': require('components/~Global/Buttons/AppBtn').default
-    // 'app-dialog': require('components/~Global/Dialogs/AppDialog').default,
+    'app-btn': appBtn,
+    'app-dialog': appDialog,
+    'nothing-here': nothingHere
     // 'nothing-here': require('components/~Global/NothingHere').default,
     // 'page-pane': require('components/~Global/Panes/PagePane').default,
     // 'pane-body': require('components/~Global/Panes/PaneBody').default,

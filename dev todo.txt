@@ -1,0 +1,16 @@
+*nav button class css
+*vue snippets
+*pinia pass by value instead of by reference
+*card scroll area
+*confirm dialog
+*fix routing
+*dirty form state
+*add no content fallbacks
+*danny style panes
+*danny style footer
+*change detail view routing
+*fix list component selecter
+*fix list name lables
+*update button
+*search bar
+set active member of list

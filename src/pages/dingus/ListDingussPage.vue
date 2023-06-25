@@ -1,8 +1,7 @@
 <template>
-  <div  class="app-page">
-    List Dingus Page goes here
+  <q-page  class="app-page">
     <ListDingussComponent />
-  </div>
+  </q-page>
 </template>
 
 <script setup lang="ts">

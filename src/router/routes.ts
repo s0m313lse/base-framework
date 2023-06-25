@@ -18,7 +18,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../pages/dingus/CreateDingusPage.vue')
       },
       {
-        path: 'detail_dingus/:id',
+        path: 'detail_dingus',
         component: () => import('../pages/dingus/DetailDingusPage.vue')
       }
     ],

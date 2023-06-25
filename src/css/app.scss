@@ -1,26 +1,50 @@
 // app global css in SCSS form
-.app-btn{
-  margin: 1rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
+body{
+  background-color: adjust-color($secondary, $lightness: 30%);;
+  color: $grey-8;
 }
 
 .app-page{
-  background-color: $accent;
-  padding: 2rem;
+  background-color: adjust-color($secondary, $lightness: 30%);
   height:100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 .app-page-container{
   background-color: $warning;
-  padding: 2rem;
   height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.component{
-  background-color: $secondary;
+.card{
+  width: 75%;
+  margin: .5rem;
+  box-shadow: .1rem .1rem .1rem gray;
+}
+
+.card-header{
+  background-color: $primary;
+  color: white;
+}
+
+.card-scroll-area{
+  max-height: 21rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.dialog-bg{
   padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-component{
@@ -32,4 +56,16 @@
   padding: 2rem;
   margin: .5rem;
   width: 100%;
+}
+
+.nav-row{
+  display:flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.nav-button{
+  padding: .5rem;
+  width: 100%;
+  flex-wrap: 1;
 }

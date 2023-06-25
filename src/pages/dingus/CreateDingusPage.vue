@@ -1,7 +1,7 @@
 <template>
-  <div class="app-page">
-    <CreateDingusComponent></CreateDingusComponent>
-  </div>
+  <q-page class="app-page">
+    <CreateDingusComponent />
+  </q-page>
 </template>
 
 <script setup lang="ts">

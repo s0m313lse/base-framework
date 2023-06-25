@@ -1,107 +1,129 @@
 <template>
-  <div class="component q-pa-md">
-    <div class="sub-component">
-      <q-toolbar class="bg-primary text-white shadow-2">
-        <q-toolbar-title>List of Dinguss</q-toolbar-title>
-      </q-toolbar>
-      <q-list bordered separator>
-        <q-item v-for="(dingus, index) in dinguss"
-        :key="index"
-        :class="{ active: index == currentIndex }"
-        clickable
-        v-ripple
-        >
-        <q-item-section>
-          <q-item-label overline>{{ dingus.name }}</q-item-label>
-          <q-item-label>{{ dingus.description }}</q-item-label>
-        </q-item-section>
-        </q-item>
-      </q-list>
-      <div v-if="currentDingus.name==''">
-        Click any Dingus to view more info
-      </div>
-      <div>
-        <q-input v-model="currentName"
+  <q-card v-if="getDingusList.length>0" class="card">
+    <q-toolbar class="bg-primary text-white shadow-2">
+      <q-toolbar-title>List of Dinguss</q-toolbar-title>
+    </q-toolbar>
+    <q-list bordered separator class="card-scroll-area">
+      <q-item
+      v-for="dingus, index in dingusNames"
+      :key="index"
+      v-ripple
+      :class="{ active: index == currentIndex }"
+      clickable
+      @click="setActiveDingus(dingus, index)"
+      >
+      <q-item-section>
+        <q-item-label>Name: <strong>{{ dingus.name }}</strong></q-item-label>
+        {{ dingus.description }}
+      </q-item-section>
+      </q-item>
+    </q-list>
+    <div v-if="!getSelectedDingus" style="text-align: center;">
+          Click any Dingus to view more info
+    </div>
+    <q-item>
+      <q-item-section>
+        <q-input
+        v-model="searchName"
         label="Search for a dingus by name"
         placeholder="Search by dingus name"
         hint="Enter the name of a dingus"
-        dense="true"
         />
-        <div class="app-btn">
-          <q-btn
-            color='primary'
-            label="Search"
-          />
-        </div>
-      </div>
-      <div class="app-btn">
-        <q-btn
-            color='negative'
-            label="Remove All"
+      </q-item-section>
+    </q-item>
+    <q-item-section class="q-pa-sm">
+      <q-btn
+          color='negative'
+          label="Remove All"
+          @click="showDeleteAllDinguss = true"
         />
-      </div>
-    </div>
-    <div v-if="currentDingus.name!=''" class="sub-component">
-        <div>
-          <label><strong>Name:</strong></label> {{ currentDingus.name }}
-        </div>
-        <div>
-          <label><strong>Description:</strong></label> {{ currentDingus.description }}
-        </div>
-        <div>
-          <label><strong>Status:</strong></label> {{ published ? "Published" : "Pending" }}
-        </div>
+    </q-item-section>
+  </q-card>
+  <q-card v-if="getSelectedDingus" class="card">
+    <q-toolbar class="bg-accent text-white shadow-2">
+      <q-toolbar-title>{{ getSelectedDingus.name }}</q-toolbar-title>
+    </q-toolbar>
+    <q-item>
+      <q-item-section>
+        {{ getSelectedDingus.description }}
+      </q-item-section>
+    </q-item>
+    <q-item>
+      <q-item-section>
+        <label><strong>Status:</strong> {{ getSelectedDingus.verified ? "Verified" : "Pending" }}</label>
+      </q-item-section>
+      <q-item-section side>
+        <q-btn :to="'/detail_dingus'" icon="mdi-pencil"></q-btn>
+      </q-item-section>
+    </q-item>
+  </q-card>
 
-        <div class="app-btn">
-          <q-btn
-            color='primary'
-            label="Edit"
-          />
-        </div>
-    </div>
+  <div v-if="getDingusList.length==0" class="q-gutter-md">
+    <nothing-here
+      icon="mdi-cancel"
+       label="You have no Dinguss"
+    />
   </div>
+
+  <app-dialog
+    v-model="showDeleteAllDinguss" persistent
+    :label="'Delete all the Dinguss'"
+    @submit="removeAllDinguss"
+  >
+    Are you sure you want to Delete all the Dinguss ?
+    <template #buttons>
+      <app-btn
+        v-close-popup
+        color="negative"
+        :label="'Cancel'"
+        @click="showDeleteAllDinguss = false"
+      />
+      <app-btn
+        type="submit"
+        color='positive'
+        :label="'Delete'"
+      />
+    </template>
+  </app-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
+
+import { storeToRefs } from 'pinia'
 
 import { Dingus } from '../../interfaces';
 
-const dinguss = ref<Dingus[]>([
-  {
-    name: 1,
-    description: 'ct1'
-  },
-  {
-    name: 2,
-    description: 'ct2'
-  },
-  {
-    name: 3,
-    description: 'ct3'
-  },
-  {
-    name: 4,
-    description: 'ct4'
-  },
-  {
-    name: 5,
-    description: 'ct5'
+import { useDingusStore} from '../../stores/dingus-store'
+const dingusStore = useDingusStore();
+const { getDingusList } = storeToRefs(dingusStore)
+const { getSelectedDingus } = storeToRefs(dingusStore)
+
+const dingusNames = computed(() => {
+  if(searchName.value.length>0) {
+    let term = new RegExp(searchName.value,'i');
+    return dingusStore.getDingusList.filter((d) => d.name.search(term)>-1)
   }
-]);
-const currentDingus = ref<Dingus>({
-  name:'',
-  description:''
+  else {return dingusStore.getDingusList}
 })
 
-const published = ref<boolean>(false);
+function setActiveDingus(dingus:Dingus, index:number) {
+  currentIndex.value = index;
+  dingusStore.selectDingus(dingus.name);
+}
+
+function removeAllDinguss() {
+  console.log('into removeAllDinguss');
+  showDeleteAllDinguss.value = false;
+  dingusStore.deleteAllDinguss();
+}
+
+const showDeleteAllDinguss = ref(false)
 
 const currentIndex = ref<number>(-1);
 
-const currentName = ref<string>('');
+const searchName = ref<string>('');
 
 </script>
-
-<style scoped lang="scss">
-
-</style>

@@ -1,17 +1,18 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
+          v-if="!onMobile"
           flat
           dense
           round
-          icon="menu"
+          icon="mdi-menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title class="text-center">
           Base Quasar App w/ Axios, Mongo, Pinia & Vite
         </q-toolbar-title>
 
@@ -38,14 +39,35 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container class="app-page-container">
+    <q-page-container class="flex flex-center">
       <router-view />
     </q-page-container>
+
+    <q-footer v-if="onMobile" class="bg-primary" style="height:4rem;line-height:1.2rem;">
+      <q-tabs>
+        <q-route-tab
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-ripple
+          class="text-white text-size-12 text-weight-bold"
+          v-bind="link"
+          active-class="text-secondary"
+          :label="link.title"
+          :icon="link.icon"
+          :to="link.link"
+          exact
+        />
+      </q-tabs>
+    </q-footer>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
+
+
 
 import EssentialLink from 'components/EssentialLink.vue';
 import  { EssentialLinkProps } from '../interfaces';
@@ -53,26 +75,29 @@ import  { EssentialLinkProps } from '../interfaces';
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Home',
-    caption: 'Bringus to the dingus',
-    icon: 'home',
+    caption: 'Bringus to the Dingus',
+    icon: 'mdi-home',
     link: '/',
     local: true
   },
   {
-    title: 'List of Dingus',
-    caption: 'View all the dinguss',
-    icon: 'list',
-    link: 'list_dinguss',
+    title: 'List of Dinguss',
+    caption: 'View all the Dinguss',
+    icon: 'mdi-format-list-bulleted',
+    link: '/list_dinguss',
     local: true
   },
   {
     title: 'Create Dingus',
-    caption: 'Add a new dingus',
-    icon: 'add',
-    link: 'create_dingus',
+    caption: 'Add a new Dingus',
+    icon: 'mdi-plus-circle',
+    link: '/create_dingus',
     local: true
   }
 ];
+const onMobile = computed(() => {
+  return $q.screen.lt.sm
+})
 
 const leftDrawerOpen = ref(false)
 

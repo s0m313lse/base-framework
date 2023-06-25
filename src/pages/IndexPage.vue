@@ -1,44 +1,26 @@
 <template>
-  <q-page class="col items-center justify-evenly">
-    This is a dingus app
-    that will get a description eventually
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="app-page">
+    <q-card class="card">
+      <q-toolbar class="card-header">
+        <q-toolbar-title>This is a Dingus app</q-toolbar-title>
+      </q-toolbar>
+      <q-item>
+        <q-item-section>
+          that will get a description eventually
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <app-btn
+            label="Default App Button"
+            color="primary"
+          />
+        </q-item-section>
+      </q-item>
+    </q-card>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { Todo, Meta } from '../interfaces';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { ref } from 'vue';
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: 'ct1'
-  },
-  {
-    id: 2,
-    content: 'ct2'
-  },
-  {
-    id: 3,
-    content: 'ct3'
-  },
-  {
-    id: 4,
-    content: 'ct4'
-  },
-  {
-    id: 5,
-    content: 'ct5'
-  }
-]);
-const meta = ref<Meta>({
-  totalCount: 1200
-});
 </script>
